@@ -16,7 +16,7 @@ enum AmadeusConnect {
     private Amadeus amadeus;
     private AmadeusConnect() {
         this.amadeus = Amadeus
-            .builder("AMADEUS_CLIENT_ID", "AMADEUS_CLIENT_SECRET")
+            .builder("nKBtjCbBdgfGr22vLPfW5CC6AUAAQJoJ", "YVVjyerv0fYaJMBH")
             .build();
     }
 

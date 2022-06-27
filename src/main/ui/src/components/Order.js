@@ -5,6 +5,8 @@ function Order(props) {
     const [fname, setFname] = useState("Harryette");
     const [lname, setLname] = useState("Mullen");
     const [dob, setDob] = useState("1990-01-01");
+    const [order, setOrder] = useState("");
+
 
     function makeTraveler(event){
         event.preventDefault();
@@ -28,6 +30,8 @@ function Order(props) {
         });
     }
 
+    console.log("Order -> makeTraveler: ", traveler)
+
     function submit(event, props){
         event.preventDefault();
         fetch("api/order/", {
@@ -46,9 +50,13 @@ function Order(props) {
         })
         .then((response) => response.json())
         .then((json) => {
+            setOrder(json);
             props.setOrder(json);
         });
     }
+
+    console.log("Order -> submit order flight offer: ", props.confirmation.flightOffers, order);
+
 
     return (
         <div>

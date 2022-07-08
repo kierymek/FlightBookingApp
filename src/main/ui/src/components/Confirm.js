@@ -21,8 +21,9 @@ function Confirm(props) {
     return (
         <div>
             <form onSubmit={(e) => submit(e, props)}>
-                <input type="submit" />
+                <input className="btn btn-danger" type="submit" />
             </form>
+            <br/>
             {props.order &&
              <div>Confirmation:<br></br>
                 {props.order}

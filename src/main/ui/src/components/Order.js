@@ -71,8 +71,9 @@ function Order(props) {
                 <input value={fname} onChange={(e) => setFname(e.target.value)} required></input><br></br>
                 <label>Last Name: </label>
                 <input value={lname} onChange={(e) => setLname(e.target.value)} required></input><br></br>
-                <input type="submit" value="Submit Traveler Info" />
+                <input className="btn btn-danger" type="submit" value="Submit Traveler Info" />
             </form>
+            <br/>
             { traveler &&
                 <form onSubmit={(e) => submit(e, props)}>
                     <input type="submit" value="Book Flight" />

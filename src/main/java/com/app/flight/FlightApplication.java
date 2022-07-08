@@ -6,13 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories
+//@EnableMongoRepositories
 public class FlightApplication {
-	@Autowired
-	FlightReservationRepository flightReservationRepo;
-	@Autowired
-	TravelerRepository travelerRepo;
-
 	public static void main(String[] args) {
 		SpringApplication.run(FlightApplication.class, args);
 	}

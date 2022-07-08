@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface TravelerRepository extends MongoRepository<TravelerRepository, String> {
+public interface TravelerRepository extends MongoRepository<TravelerInstance, String> {
 
     @Query("{name:'?0'}")
     TravelerRepository findItemByName(String name);

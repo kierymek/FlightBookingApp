@@ -44,8 +44,9 @@ function Flight(props) {
                     onChange={(e) => setReturnDate(e.target.value)}
                     id="return"
                     name="return" /><br></br>
-                <input type="submit" />
+                <input className="btn btn-danger" type="submit" />
             </form>
+            <br/>
             <FlightSelect flightOptions={flightOptions} setFlight={props.setFlight} />
         </div>
     );

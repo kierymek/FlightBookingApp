@@ -8,6 +8,8 @@ import com.google.gson.JsonObject;
 import com.amadeus.resources.FlightOfferSearch;
 import com.amadeus.resources.FlightPrice;
 import com.amadeus.resources.Traveler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
+//@EnableMongoRepositories
 @RequestMapping(value="/api")
 public class ApiController {
+	@Autowired
+	private MongoConnect mongoConnect;
 	@GetMapping("/locations")
 	public Location[] locations(@RequestParam(required=true) String keyword) throws ResponseException {
 		return AmadeusConnect.INSTANCE.location(keyword);
@@ -48,4 +53,40 @@ public class ApiController {
 	public FlightOrder order(@RequestBody(required=true) JsonObject order) throws ResponseException{
 		return AmadeusConnect.INSTANCE.order(order);
 	}
+
+	@PostMapping("/login")
+	public UserInstance login(@RequestBody(required=true) JsonObject user) throws RuntimeException {
+		JsonObject userJson = user.get("data").getAsJsonObject();
+		String email = userJson.get("email").getAsString();
+		String password = userJson.get("password").getAsString();
+		try {
+			return mongoConnect.login(email, password);
+		} catch (RuntimeException err) {
+			System.out.println("Error was catched when logging: " +  err);
+			return null;
+		}
+	}
+
+	@PostMapping("/register")
+	public UserInstance register(@RequestBody(required=true) JsonObject user) throws RuntimeException {
+		try {
+			return mongoConnect.register(user.get("data").getAsJsonObject());
+		} catch (RuntimeException err) {
+			System.out.println("Error was catched when registering: " +  err);
+			return null;
+		}
+	}
+
+	@PostMapping("/auth")
+	public UserInstance auth(@RequestBody(required=true) JsonObject user) throws RuntimeException {
+		JsonObject userJson = user.get("data").getAsJsonObject();
+		String email = userJson.get("email").getAsString();
+		try {
+			return mongoConnect.auth(email);
+		} catch (RuntimeException err) {
+			System.out.println("Error was catched when registering: " +  err);
+			return null;
+		}
+	}
+
 }

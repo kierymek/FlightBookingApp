@@ -1,37 +1,27 @@
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { setCookie } from "../cookies/CookieHandler";
 
-function Navigator() {
+function Navigator(props) {
+  function onLogout() {
+    setCookie("username", "", 0);
+    props.setUser(null);
+  }
   return (
-    // <Navbar bg="dark" expand="lg" variant="dark">
-    //   <Container>
-    //     <Navbar.Brand href="#home">Flight Navigator</Navbar.Brand>
-    //     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    //     <Navbar.Collapse id="basic-navbar-nav">
-    //       <Nav className="me-auto">
-    //         <Nav.Link href="/">Login</Nav.Link>
-    //         <Nav.Link href="/search">Search</Nav.Link>
-    //         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-    //           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-    //           <NavDropdown.Item href="#action/3.2">
-    //             Another action
-    //           </NavDropdown.Item>
-    //           <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-    //           <NavDropdown.Divider />
-    //           <NavDropdown.Item href="#action/3.4">
-    //             Separated link
-    //           </NavDropdown.Item>
-    //         </NavDropdown>
-    //       </Nav>
-    //     </Navbar.Collapse>
-    //   </Container>
-    // </Navbar>
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="/">Flight Navigator</Navbar.Brand>
+        <Navbar.Brand href="/search">Flight Navigator</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/">Login</Nav.Link>
+          {props.user ? (
+            <Nav.Link href="/" onClick={() => onLogout()}>
+              Log out
+            </Nav.Link>
+          ) : (
+            <Nav.Link href="/">Login</Nav.Link>
+          )}
+
           <Nav.Link href="/search">Search</Nav.Link>
         </Nav>
+        {props.user && <Nav.Link href="/profile">{props.user.email}</Nav.Link>}
       </Container>
     </Navbar>
   );

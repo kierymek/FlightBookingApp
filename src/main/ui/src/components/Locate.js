@@ -12,6 +12,9 @@ function Locate(props) {
       .then((response) => response.json())
       .then((json) => {
         setLocations(json);
+      })
+      .catch((err) => {
+        console.log("error catched when fetching airports for location: ", err);
       });
   };
 

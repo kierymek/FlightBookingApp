@@ -18,10 +18,11 @@ class LoginComponent extends React.Component {
   }
 
   onSubmit(user) {
-    setCookie("username", user.email, 2);
-    this.props.onSubmit(user);
+    setCookie("username", user.email, 30);
+    this.props.setUser(user);
     this.props.logger("login");
     this.props.navigate("/search");
+    console.log("LoginComponent -> onSubmit -> navigate");
   }
 
   render() {
@@ -66,6 +67,7 @@ class LoginForm extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+
     console.log("onsubmit login: ", this.state, this.props.mode);
 
     switch (this.props.mode) {

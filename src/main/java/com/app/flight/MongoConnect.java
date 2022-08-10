@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 //@RestController
 @Service
 @EnableMongoRepositories
@@ -57,5 +59,22 @@ public class  MongoConnect {
     }
      void addTraveler(JsonObject user) throws RuntimeException {
         userRepository.save(new UserInstance(user));
+    }
+
+    public FlightReservation saveReservation(JsonObject order) throws RuntimeException {
+        JsonObject flight = order.getAsJsonArray("flightOffers").get(0).getAsJsonObject();
+        JsonObject traveler = order.getAsJsonArray("travelers").get(0).getAsJsonObject();
+        JsonObject user = order.get("user").getAsJsonObject();
+        FlightReservation reservation = new FlightReservation(flight, traveler, user);
+        flightReservationRepo.save(reservation);
+        return reservation;
+    }
+
+    public List<FlightReservation> getUserReservations(String email) throws RuntimeException {
+        return flightReservationRepo.findAllByEmail(email);
+    }
+
+    public void cancel(String id) throws RuntimeException {
+        flightReservationRepo.deleteById(id);
     }
 }

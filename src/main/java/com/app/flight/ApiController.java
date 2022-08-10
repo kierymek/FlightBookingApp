@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 
 @RestController
 //@EnableMongoRepositories
@@ -50,8 +52,10 @@ public class ApiController {
 	}
 
 	@PostMapping("/order")
-	public FlightOrder order(@RequestBody(required=true) JsonObject order) throws ResponseException{
-		return AmadeusConnect.INSTANCE.order(order);
+	public FlightReservation order(@RequestBody(required=true) JsonObject order) throws ResponseException{
+		System.out.println("FlightOrder creating");
+		JsonObject orderJson = order.get("data").getAsJsonObject();
+		return mongoConnect.saveReservation(orderJson);
 	}
 
 	@PostMapping("/login")
@@ -72,7 +76,7 @@ public class ApiController {
 		try {
 			return mongoConnect.register(user.get("data").getAsJsonObject());
 		} catch (RuntimeException err) {
-			System.out.println("Error was catched when registering: " +  err);
+			System.out.println("Error was catched when authentificating: " +  err);
 			return null;
 		}
 	}
@@ -86,6 +90,22 @@ public class ApiController {
 		} catch (RuntimeException err) {
 			System.out.println("Error was catched when registering: " +  err);
 			return null;
+		}
+	}
+
+	@GetMapping("/reservations")
+	public List<FlightReservation> reservations(@RequestParam(required=true) String email) throws ResponseException {
+		return mongoConnect.getUserReservations(email);
+	}
+
+	@PostMapping("/cancel")
+	public void cancel(@RequestBody(required=true) JsonObject req) throws RuntimeException {
+		JsonObject userJson = req.get("data").getAsJsonObject();
+		String id = userJson.get("id").getAsString();
+		try {
+			mongoConnect.cancel(id);
+		} catch (RuntimeException err) {
+			System.out.println("Error was catched when canceling: " +  err);
 		}
 	}
 

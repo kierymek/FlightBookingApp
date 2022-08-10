@@ -1,7 +1,8 @@
 export function checkCookie() {
   let username = getCookie("username");
   if (username != "") {
-    alert("Welcome again " + username);
+    // alert("Welcome again " + username);
+    console.log("Authentificated correctly for user: ", username);
     return true;
   } else {
     // alert("First you need to log in to gain all functionalities!");

@@ -25,7 +25,7 @@ export default class Reservation extends Component {
             </label>
             <br />
             <label>
-              Flight furation: {moment.duration(segment.duration).humanize()}
+              Flight furation: {moment.duration(flight.duration).humanize()}
             </label>
             <br />
             <label>Aircraft code: {flight.aircraft}</label>

@@ -24,7 +24,6 @@ public class  MongoConnect {
     UserRepository userRepository;
     public UserInstance login(String email, String password) throws RuntimeException {
         System.out.println("login in mongodb api with: " + email + " " + password);
-//        UserInstance user = userRepository.findByEmail(email);
         UserInstance user = userRepository.findByCredentials(email, password);
         System.out.println("found user: " + user);
         if (user == null) {

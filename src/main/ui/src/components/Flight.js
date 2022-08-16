@@ -18,14 +18,14 @@ function Flight(props) {
 
     fetch(
       "/api/flights/?origin=" +
-        props.origin +
-        "&destination=" +
-        props.destination +
-        "&departDate=" +
-        departDate +
-        "&adults=" +
-        passengers +
-        returnDateParam
+      props.origin +
+      "&destination=" +
+      props.destination +
+      "&departDate=" +
+      departDate +
+      "&adults=" +
+      passengers +
+      returnDateParam
     )
       .then((response) => response.json())
       .then((json) => {
@@ -44,7 +44,7 @@ function Flight(props) {
           type="checkbox"
           id="temp"
           onChange={() => setIsOneWay(!isOneWay)}
-          // checked={isOneWay}
+        // checked={isOneWay}
         />
         <label htmlFor="temp">{isOneWay ? "One-way" : "Round trip"}</label>
       </div>
